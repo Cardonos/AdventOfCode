@@ -3,13 +3,6 @@ import pandas as pd
 
 input = np.loadtxt("Inputs/Day 3.txt", dtype='str')
 
-print(input)
-
-
-# print(list(set(input[0]) & set(input[1])))
-
-# print(str(input[1])[0:4], int(len(input[1])/2))
-
 def checkCommonCharsInGroup(strIn):
     output = []
     i = 0
