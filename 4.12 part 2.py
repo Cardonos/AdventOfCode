@@ -1,19 +1,10 @@
-import numpy as np
 import pandas as pd
-
 data = pd.read_csv('Inputs/Day 4.txt', names=['a', 'b', 'c', 'd'], sep=',|-', engine='python')
-
-i = 0
-count = 0
+i = 0; count = 0
 while i < len(data):
-    limLowA = data.at[i, 'a']
-    limHiA = data.at[i, 'b']
-    limLowB =data.at[i, 'c']
-    limHiB = data.at[i, 'd']
-    if (limLowB - limLowA) >= 0 and (limHiA >= limLowB):
-        count = count + 1
-    elif (limLowA - limLowB) >= 0 and (limHiB >= limLowA):
-        count = count + 1
-    i=i+1
-
+    if (data.at[i, 'c'] - data.at[i, 'a']) >= 0 and (data.at[i, 'b'] >= data.at[i, 'c']):
+        count+=1
+    elif (data.at[i, 'a'] - data.at[i, 'c']) >= 0 and (data.at[i, 'd'] >= data.at[i, 'a']):
+        count+=1
+    i+=1
 print(count)
