@@ -20,8 +20,8 @@ while i < len(data):
     j = 0
     i += 1
     stack = []
-print(crates)
 crates[0, len(crates)-1] = '   '
+print(crates)
 
 def moveCrate(state, start, end, number):
     r = 0
@@ -65,7 +65,6 @@ def moveCrate(state, start, end, number):
                     state = np.vstack((newline, state))
                     l = len(state)
                 elif not state[l, end - 1] == '   ':
-                    print(moving[len(moving) - 1 - r])
                     state[l - 1, end - 1] = moving[len(moving) - 1 - r]
                     l = len(state)
                 else:
