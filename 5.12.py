@@ -20,8 +20,8 @@ while i < len(data):
     j = 0
     i += 1
     stack = []
-print(crates)
 crates[0, len(crates)-1] = '   '
+print(crates)
 
 def moveCrate(state, start, end):
     k = 0
