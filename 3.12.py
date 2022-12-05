@@ -1,16 +1,9 @@
 import numpy as np
-import pandas as pd
 
 input = np.loadtxt("Inputs/Day 3.txt", dtype='str')
+# loads the input file as strings
 
-print(input)
-
-
-# print(list(set(input[0]) & set(input[1])))
-
-# print(str(input[1])[0:4], int(len(input[1])/2))
-
-def checkCommonChars(strIn):
+def checkCommonChars(strIn):    # splits the string into halves and checks for common characters between the two
     output = []
     i = 0
     while i < len(strIn):
@@ -19,7 +12,7 @@ def checkCommonChars(strIn):
         output = np.append(output, list(set(firstHalf) & set(secondHalf)))
         i = i + 1
 
-    return output
+    return output   # returns the common characters
 
 
 comChar = checkCommonChars(input)
@@ -34,7 +27,7 @@ def createOut(inp):
         elif inp[i].isupper() == False:
             output = np.append(output, ord(inp[i]) - 96)
         i = i + 1
-    return (output)
+    return output   # transforms the characters first to their ASCII value and then to their assigned value
 
 
 print(createOut(comChar).sum())

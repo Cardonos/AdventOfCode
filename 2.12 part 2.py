@@ -1,11 +1,11 @@
 import pandas as pd
 
 input = pd.read_csv("Inputs/Day 2.txt", names=['opp', 'oc'], sep=' ')
-
+# loads the input file, separated into two columns for the two players
 print (input)
 
 
-def winning (opp, oc):
+def winning (opp, oc):  # checks the score depending on who won and what sign was used
     signVal = 0
     outcome = 0
     if oc == 'X':
@@ -42,4 +42,4 @@ while i < len(input):
     output = output + winning(input.at[i, 'opp'], input.at[i, 'oc'])
     i = i+1
 
-print(output)
+print(output)   # iterates over the input file and creates an output
