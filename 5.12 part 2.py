@@ -41,7 +41,7 @@ def moveCrate(state, start, end, number):
                 else:
                     moving = np.append(moving, state[k, start - 1])  # appending to the moving vector
                 state[k, start - 1] = '   '  # replacing the copied cells with empty cells
-                k = len(state)
+                break
             else:
                 k += 1
 
@@ -53,7 +53,7 @@ def moveCrate(state, start, end, number):
             while l < len(state):
                 if not state[l, end - 1] == '   ':
                     state[l - 1, end - 1] = moving[len(moving) - 1 - r]
-                    l = len(state)  # If there is enough space for the entire movement stack it just gets placed down
+                    break  # If there is enough space for the entire movement stack it just gets placed down
                 else:
                     l += 1
         else:  # if there is not enough space for the entire movement stack
@@ -66,10 +66,10 @@ def moveCrate(state, start, end, number):
                         o += 1
                     newline[end - 1] = moving[len(moving) - 1 - r]
                     state = np.vstack((newline, state))  # the to be moved cell gets stacked together with the new row
-                    l = len(state)
+                    break
                 elif not state[l, end - 1] == '   ':  # checks for the first non-empty cell
                     state[l - 1, end - 1] = moving[len(moving) - 1 - r]  # places the object in the first empty cell
-                    l = len(state)
+                    break
                 else:
                     l += 1
         r += 1
@@ -89,7 +89,7 @@ while p < len(crates[0]):
     while q < len(crates):
         if not crates[q, p] == '   ':
             output.append(crates[q, p])
-            q = len(crates)  # iterates over the stack to create the final output
+            break  # iterates over the stack to create the final output
         else:
             q += 1
     p += 1

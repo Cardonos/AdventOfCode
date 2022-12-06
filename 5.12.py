@@ -34,7 +34,7 @@ def moveCrate(state, start, end):  # routine for moving a crate from a start pos
         if not state[k, start - 1] == '   ':  # Checks whether the currently looked at cell is filled
             moving = state[k, start - 1]
             state[k, start - 1] = '   '
-            k = len(state)  # copies the object to be moved and replaces it with an empty cell
+            break  # copies the object to be moved and replaces it with an empty cell
         else:
             k += 1
     while l < len(state):  # iterates over the target column
@@ -46,10 +46,10 @@ def moveCrate(state, start, end):  # routine for moving a crate from a start pos
                 o += 1
             newline[end - 1] = moving
             state = np.vstack((newline, state))  # creates a new row with the target cell filled and stacks it
-            l = len(state)
+            break
         elif not state[l, end - 1] == '   ':  # checks whether the target cell is filled
             state[l - 1, end - 1] = moving
-            l = len(state)  # places the copied object in the first free cell
+            break  # places the copied object in the first free cell
         else:
             l += 1
     return state  # returns the new stack
@@ -71,7 +71,7 @@ while p < len(crates[0]):
     while q < len(crates):
         if not crates[q, p] == '   ':
             output.append(crates[q, p])
-            q = len(crates)  # iterates over the stack to create the final output
+            break  # iterates over the stack to create the final output
         else:
             q += 1
     p += 1
