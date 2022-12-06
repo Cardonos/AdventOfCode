@@ -14,7 +14,8 @@ except ValueError:
 i = int(MarkerLength)
 while i < len(datastream):  # iterates over the input string
     duplicates = False  # initiates the variable that is logging duplicates
-    chunk = Counter(datastream[i - int(MarkerLength):i])    # creates a library of how often each character is used in the string
+    chunk = Counter(datastream[i - int(MarkerLength):i])    # creates a library of how often each character is used
+    # in the string
     for char, count in chunk.items():
         if count > 1:   # checks whether there are any duplicate characters in the library
             duplicates = True
