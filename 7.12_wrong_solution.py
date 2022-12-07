@@ -85,11 +85,3 @@ while nested:
 print(fileSystem)
 
 
-
-# build loop to iterate over contents and sum
-# check if contents contain other directories in a loop until none remain
-# sum up in final array
-
-# Otherwise: nested arrays
-
-# maybe find a way to sum up all files not in an external directory
