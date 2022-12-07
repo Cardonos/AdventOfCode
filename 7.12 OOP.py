@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 # Defining files
 class File:
     def __init__(self, size, name):
@@ -8,6 +9,7 @@ class File:
 
     def get_size(self):
         return self.size
+
 
 # Defining Folders
 class Folder:
@@ -25,17 +27,17 @@ class Folder:
 
     def folders(self, allsub):
         folders = []
-        for i in self.content:
-            if type(i) == Folder:
-                folders.append(i)
-                if allsub == True:
-                    folders.extend(i.folders(True))
+        for k in self.content:
+            if type(k) == Folder:
+                folders.append(k)
+                if allsub:
+                    folders.extend(k.folders(True))
         return folders
 
     def down(self, foldername):
-        for j in self.content:
-            if j.name == foldername:
-                return j
+        for l in self.content:
+            if l.name == foldername:
+                return l
 
     def get_size(self):
         size = 0
@@ -66,11 +68,11 @@ while i < len(data):
 
 filesystem = [root]
 filesystem.extend(root.folders(True))  # build folder structure
-sum = 0
+summe = 0
 for j in filesystem:  # get all folders under size 100000
     if j.get_size() < 100000:
-        sum += j.get_size()
-print(sum)  # Part 1 Answer
+        summe += j.get_size()
+print(summe)  # Part 1 Answer
 
 # Part 2
 space = 70000000
