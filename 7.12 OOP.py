@@ -2,10 +2,10 @@ import pandas as pd
 
 
 class File:
-    def __init__(self, size, name, folder):
+    def __init__(self, size, name):
         self.size = size
         self.name = name
-        self.folder = folder
+
 
     def get_size(self):
         return self.size
@@ -63,7 +63,7 @@ while i < len(data):
     elif data.at[i, 'a'] == 'dir':  # directory listed
         loc.add_folder(Folder(data.at[i, 'b'], loc))
     else:  # file listed
-        loc.add_file(File(int(data.at[i, 'a']), data.at[i, 'b'], loc))
+        loc.add_file(File(int(data.at[i, 'a']), data.at[i, 'b'], ))
     i += 1
 
 filesystem = [root]
