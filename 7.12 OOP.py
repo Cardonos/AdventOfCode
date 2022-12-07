@@ -6,9 +6,9 @@ class File:
         self.size = size
         self.name = name
 
-
     def get_size(self):
         return self.size
+
 
 class Folder:
 
@@ -45,8 +45,6 @@ class Folder:
 
 
 data = pd.read_csv('Inputs/Day 7.txt', names=['a', 'b', 'c'], header=None, sep=' ')
-print(data)
-
 # turn commands into folder structure
 root = Folder('/', None)
 i = 0
@@ -67,9 +65,9 @@ while i < len(data):
     i += 1
 
 filesystem = [root]
-filesystem.extend(root.folders(True))   # build folder structure
+filesystem.extend(root.folders(True))  # build folder structure
 sum = 0
-for j in filesystem:    # get all folders under size 100000
+for j in filesystem:  # get all folders under size 100000
     if j.get_size() < 100000:
         sum += j.get_size()
 print(sum)  # Part 1 Answer
@@ -77,13 +75,12 @@ print(sum)  # Part 1 Answer
 # Part 2
 space = 70000000
 needed_space = 30000000
-free_space = space-root.get_size()  # calculate the current free space
-needed_size = needed_space-free_space   # calculate the needed size to be deleted
-#print(free_space)
-#print(needed_size)
+free_space = space - root.get_size()  # calculate the current free space
+needed_size = needed_space - free_space  # calculate the needed size to be deleted
+
 bigger_folders = []
 for j in filesystem:
     if j.get_size() > needed_size:  # get all folders bigger than the needed size
-        bigger_folders.append([j.get_size()])   # generate a list of all folders bigger than the needed size
-bigger_folders.sort()   # sort the list
-print(bigger_folders[0])    # output the smallest folder
+        bigger_folders.append([j.get_size()])  # generate a list of all folders bigger than the needed size
+bigger_folders.sort()  # sort the list
+print(bigger_folders[0])  # output the smallest folder
