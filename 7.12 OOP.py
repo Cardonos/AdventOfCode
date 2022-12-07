@@ -77,7 +77,18 @@ sum = 0
 for j in filesystem:    # get all folders under size 100000
     if j.get_size() < 100000:
         sum += j.get_size()
-        print(j.get_size())
 print(sum)  # Part 1 Answer
 
 # Part 2
+space = 70000000
+needed_space = 30000000
+free_space = space-root.get_size()  # calculate the current free space
+needed_size = needed_space-free_space   # calculate the needed size to be deleted
+#print(free_space)
+#print(needed_size)
+bigger_folders = []
+for j in filesystem:
+    if j.get_size() > needed_size:  # get all folders bigger than the needed size
+        bigger_folders.append([j.get_size()])   # generate a list of all folders bigger than the needed size
+bigger_folders.sort()   # sort the list
+print(bigger_folders[0])    # output the smallest folder
