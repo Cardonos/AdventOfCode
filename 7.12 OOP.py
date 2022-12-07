@@ -16,14 +16,12 @@ class Folder:
         self.name = name
         self.supfolder = supfolder
         self.content = []
-        self.nested = False
 
     def add_file(self, file):
         self.content.append(file)
 
     def add_folder(self, folder):
         self.content.append(folder)
-        self.nested = True
 
     def folders(self, allsub):
         folders = []
@@ -33,9 +31,6 @@ class Folder:
                 if allsub == True:
                     folders.extend(i.folders(True))
         return folders
-
-    def is_nested(self):
-        return self.nested
 
     def down(self, foldername):
         for j in self.content:
