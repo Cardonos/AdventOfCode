@@ -1,6 +1,6 @@
 import pandas as pd
 
-
+# Defining files
 class File:
     def __init__(self, size, name):
         self.size = size
@@ -9,7 +9,7 @@ class File:
     def get_size(self):
         return self.size
 
-
+# Defining Folders
 class Folder:
 
     def __init__(self, name, supfolder):
