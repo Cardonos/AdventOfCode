@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 
 data = pd.read_csv('Inputs/Day 8.txt', header=None)
-print(data)
 # Parsing the Data into a grid
 treeGrid = []  # creating the empty grid
 j = 0
@@ -61,20 +60,20 @@ checkvisibility('down', treeGrid, visibleGrid)
 checkvisibility('up', treeGrid, visibleGrid)
 checkvisibility('left', treeGrid, visibleGrid)
 checkvisibility('right', treeGrid, visibleGrid)  # checking every direction
-print(visibleGrid)
-print(np.count_nonzero(visibleGrid == 1))  # counting the number of visible trees
+print('The number of visible trees is ' + str(np.count_nonzero(visibleGrid == 1)))  # counting the number of visible
+# trees
 
 
 # Part 2
 
-def scenicvalue(trees, x, y):
+def scenicvalue(trees, x, y):   # method to get the scenic value of any given tree
     currentTree = trees[x, y]
     scenvalleft = 0
     scenvalright = 0
     scenvalup = 0
     scenvaldown = 0
     # check left
-    o = 1
+    o = 1   # iterating towards the left, checking for taller trees, increasing value per tree thats shorter
     while o <= x:
         if trees[x - o, y] < currentTree:
             scenvalleft += 1
@@ -83,7 +82,7 @@ def scenicvalue(trees, x, y):
             break
         o += 1
     # check right
-    o = 1
+    o = 1   # iterating towards the right, checking for taller trees, increasing value per tree thats shorter
     while o + x <= trees.shape[1] - 1:
         if trees[x + o, y] < currentTree:
             scenvalright += 1
@@ -92,7 +91,7 @@ def scenicvalue(trees, x, y):
             break
         o += 1
     # check up
-    o = 1
+    o = 1   # iterating upwards, checking for taller trees, increasing value per tree thats shorter
     while o <= y:
         if trees[x, y - o] < currentTree:
             scenvalup += 1
@@ -101,7 +100,7 @@ def scenicvalue(trees, x, y):
             break
         o += 1
     # check down
-    o = 1
+    o = 1   # iterating downwards, checking for taller trees, increasing value per tree thats shorter
     while o + y <= trees.shape[0] - 1:
         if trees[x, y + o] < currentTree:
             scenvaldown += 1
@@ -109,19 +108,19 @@ def scenicvalue(trees, x, y):
             scenvaldown += 1
             break
         o += 1
-    scenicvalue = scenvaldown*scenvalleft*scenvalright*scenvalup
+    scenicvalue = scenvaldown*scenvalleft*scenvalright*scenvalup # calculating the scenic value
 
     return scenicvalue
 
 
-scenicValueGrid = np.zeros(treeGrid.shape)
+scenicValueGrid = np.zeros(treeGrid.shape)  # creating the output grid
 p = 0
 q = 0
 while p < treeGrid.shape[0]:
     while q < treeGrid.shape[1]:
-        scenicValueGrid[p, q] = scenicvalue(treeGrid, p, q)
+        scenicValueGrid[p, q] = scenicvalue(treeGrid, p, q) # calculating the scenic value for each tree on the grid
         q += 1
     q = 0
     p += 1
 
-print(np.max(scenicValueGrid))
+print('The tree with the highest scenic value has a value of ' + str(np.max(scenicValueGrid)))

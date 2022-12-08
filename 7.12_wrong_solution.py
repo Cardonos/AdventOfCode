@@ -47,29 +47,36 @@ fileSystem = pd.DataFrame(data=arrayOut.T)
 print(fileSystem.dtypes)
 fileSystem.columns = fileSystem.iloc[0]
 fileSystem.drop(index=fileSystem.index[0], axis=0, inplace=True)
-print(fileSystem)
-print(fileSystem.at[1, 'brwncbh'])
+print(len(fileSystem.columns))
 nested = True
 while nested:
     l = 0
     while l < fileSystem.shape[1]:
         m = 1
         searchColumn = 0
-        while m-1 < fileSystem.shape[0]:
-            if re.search('[a-z]', str(fileSystem.iat[m, searchColumn])):
+        while m < fileSystem.shape[0]:    # Loop bauen, der die erste occurrence des Namens nach der search column gibt
+            if re.search('[a-z]', str(fileSystem.iat[m-1, searchColumn])):
                 lastColumn = searchColumn
-                searchColumn = fileSystem.at[m, searchColumn]
+                a = fileSystem.iat[m-1, lastColumn]
+                z = searchColumn+1
+                while z < len(fileSystem.columns):
+                    if fileSystem.columns[z] == str(fileSystem.iat[m-1, lastColumn]):
+                        searchColumn = z
+                        break
+                    z += 1
                 m = 0
             m += 1
         n = 0
         while n < fileSystem.shape[0]:
-            if re.search('[a-z]', str(fileSystem.at[n + 1, lastColumn])):
+            if re.search('[a-z]', str(fileSystem.iat[n, lastColumn])):
                 o = 0
                 summe = 0
-                while o <  fileSystem.shape[0]:
-                    summe = summe + int(fileSystem.at[o + 1, searchColumn])
+                while o < fileSystem.shape[0]-1:
+                    b = int(fileSystem.iat[o, searchColumn])
+                    summe = summe + int(fileSystem.iat[o, searchColumn])
                     o += 1
-                fileSystem.at[n + 1, lastColumn] = summe
+                c = fileSystem.iat[n, lastColumn]
+                fileSystem.iat[n, int(lastColumn)] = summe
                 break
             n += 1
         l += 1
