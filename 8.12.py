@@ -23,32 +23,34 @@ def checkvisibility(direction, trees, visibility):
         lookingdir = 1
     elif direction == 'up' or direction == 'down':
         lookingdir = 0
+    else:
+        return
     m = 0
     while m < trees.shape[abs(lookingdir - 1)]:  # iterating over the Axis not being looked at
-        currentHighestTree = -1  # variable to track the currently highest tree looked at
+        current_highest_tree = -1  # variable to track the currently highest tree looked at
         n = 0
         if direction == 'left':  # Routines for checking each direction
             while n < trees.shape[lookingdir]:
-                if currentHighestTree < trees[m, n]:  # if the tree is taller than the current highest
-                    currentHighestTree = trees[m, n]  # new highest Tree
+                if current_highest_tree < trees[m, n]:  # if the tree is taller than the current highest
+                    current_highest_tree = trees[m, n]  # new highest Tree
                     visibility[m, n] = 1  # tree is visible
                 n += 1
         elif direction == 'right':
             while n < trees.shape[lookingdir]:
-                if currentHighestTree < trees[m, trees.shape[lookingdir] - n - 1]:
-                    currentHighestTree = trees[m, trees.shape[lookingdir] - n - 1]
+                if current_highest_tree < trees[m, trees.shape[lookingdir] - n - 1]:
+                    current_highest_tree = trees[m, trees.shape[lookingdir] - n - 1]
                     visibility[m, trees.shape[lookingdir] - n - 1] = 1
                 n += 1
         elif direction == 'down':
             while n < trees.shape[lookingdir]:
-                if currentHighestTree < trees[n, m]:
-                    currentHighestTree = trees[n, m]
+                if current_highest_tree < trees[n, m]:
+                    current_highest_tree = trees[n, m]
                     visibility[n, m] = 1
                 n += 1
         elif direction == 'up':
             while n < trees.shape[lookingdir]:
-                if currentHighestTree < trees[trees.shape[lookingdir] - n - 1, m]:
-                    currentHighestTree = trees[trees.shape[lookingdir] - n - 1, m]
+                if current_highest_tree < trees[trees.shape[lookingdir] - n - 1, m]:
+                    current_highest_tree = trees[trees.shape[lookingdir] - n - 1, m]
                     visibility[trees.shape[lookingdir] - n - 1, m] = 1
                 n += 1
         m += 1
@@ -66,50 +68,45 @@ print('The number of visible trees is ' + str(np.count_nonzero(visibleGrid == 1)
 # Part 2
 
 def scenicvalue(trees, x, y):   # method to get the scenic value of any given tree
-    currentTree = trees[x, y]
-    scenvalleft = 0
-    scenvalright = 0
-    scenvalup = 0
-    scenvaldown = 0
-    # check left
+    currenttree = trees[x, y]   # the tree that is being looked at
+    sl = 0
+    sr = 0
+    su = 0
+    sd = 0
     o = 1   # iterating towards the left, checking for taller trees, increasing value per tree thats shorter
     while o <= x:
-        if trees[x - o, y] < currentTree:
-            scenvalleft += 1
-        elif trees[x - o, y] >= currentTree:
-            scenvalleft += 1
+        if trees[x - o, y] < currenttree:
+            sl += 1
+        elif trees[x - o, y] >= currenttree:
+            sl += 1
             break
         o += 1
-    # check right
     o = 1   # iterating towards the right, checking for taller trees, increasing value per tree thats shorter
     while o + x <= trees.shape[1] - 1:
-        if trees[x + o, y] < currentTree:
-            scenvalright += 1
-        elif trees[x + o, y] >= currentTree:
-            scenvalright += 1
+        if trees[x + o, y] < currenttree:
+            sr += 1
+        elif trees[x + o, y] >= currenttree:
+            sr += 1
             break
         o += 1
-    # check up
     o = 1   # iterating upwards, checking for taller trees, increasing value per tree thats shorter
     while o <= y:
-        if trees[x, y - o] < currentTree:
-            scenvalup += 1
-        elif trees[x, y - o] >= currentTree:
-            scenvalup += 1
+        if trees[x, y - o] < currenttree:
+            su += 1
+        elif trees[x, y - o] >= currenttree:
+            su += 1
             break
         o += 1
-    # check down
     o = 1   # iterating downwards, checking for taller trees, increasing value per tree thats shorter
     while o + y <= trees.shape[0] - 1:
-        if trees[x, y + o] < currentTree:
-            scenvaldown += 1
-        elif trees[x, y + o] >= currentTree:
-            scenvaldown += 1
+        if trees[x, y + o] < currenttree:
+            sd += 1
+        elif trees[x, y + o] >= currenttree:
+            sd += 1
             break
         o += 1
-    scenicvalue = scenvaldown*scenvalleft*scenvalright*scenvalup # calculating the scenic value
-
-    return scenicvalue
+    sv = sd * sl * sr * su   # calculating the scenic value
+    return sv
 
 
 scenicValueGrid = np.zeros(treeGrid.shape)  # creating the output grid
@@ -117,7 +114,7 @@ p = 0
 q = 0
 while p < treeGrid.shape[0]:
     while q < treeGrid.shape[1]:
-        scenicValueGrid[p, q] = scenicvalue(treeGrid, p, q) # calculating the scenic value for each tree on the grid
+        scenicValueGrid[p, q] = scenicvalue(treeGrid, p, q)  # calculating the scenic value for each tree on the grid
         q += 1
     q = 0
     p += 1
