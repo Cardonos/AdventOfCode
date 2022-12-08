@@ -17,8 +17,6 @@ while j < len(data):
         treeGrid = newLine
     j += 1
 
-visibleGrid = np.zeros(treeGrid.shape)  # defining the grid to track visibility, 0 means covered, 1 means seen
-
 
 def checkvisibility(direction, trees, visibility):
     if direction == 'left' or direction == 'right':  # Checking fo which direction is being looked at
@@ -56,6 +54,7 @@ def checkvisibility(direction, trees, visibility):
         m += 1
 
 
+visibleGrid = np.zeros(treeGrid.shape)  # defining the grid to track visibility, 0 means covered, 1 means seen
 checkvisibility('down', treeGrid, visibleGrid)
 checkvisibility('up', treeGrid, visibleGrid)
 checkvisibility('left', treeGrid, visibleGrid)
