@@ -1,0 +1,84 @@
+import numpy as np
+import pandas as pd
+import math
+
+data = pd.read_csv('Inputs/Day 9.txt', names=['dir', 'dis'], dtype={'dir': str, 'dis': 'Int64'}, sep=' ')
+print(data)
+
+# upper bound for the field size is up+down by left+right
+# create the field
+sum_up = 0
+sum_down = 0
+sum_left = 0
+sum_right = 0
+i = 0
+while i < len(data):
+    distance = data.at[i, 'dis']
+    if data.at[i, 'dir'] == 'L':
+        sum_left += distance
+    elif data.at[i, 'dir'] == 'R':
+        sum_right += distance
+    if data.at[i, 'dir'] == 'U':
+        sum_up += distance
+    if data.at[i, 'dir'] == 'D':
+        sum_down += distance
+    i += 1
+ropeField = np.zeros((sum_down+sum_up, sum_left+sum_right))
+tailTrackGrid = np.zeros((sum_down+sum_up, sum_left+sum_right))
+
+
+def move_head(direction, location):    # method to move the rope head
+    if direction == 'L':
+        new_x = location[1]-1
+        new_y = location[0]
+    elif direction == 'R':
+        new_x = location[1]+1
+        new_y = location[0]
+    elif direction == 'U':
+        new_x = location[1]
+        new_y = location[0]-1
+    elif direction == 'D':
+        new_x = location[1]
+        new_y = location[0]+1
+    new_loc = [new_y, new_x]
+    return new_loc  # incrementing the coordinates depending on the direction
+
+
+def move_tail(head_pos, location): # method to move the rope tail
+    if abs(head_pos[0]-location[0]) + abs(head_pos[1]-location[1]) == 1 or abs(head_pos[0]-location[0]) - abs(head_pos[1]-location[1]) == 0:
+        return location  # if the tail is within one block of the head then it does not need to move
+    elif not location[0]-head_pos[0] == 0 and not location[1]-head_pos[1] == 0:
+        new_x = location[1]+((head_pos[1]-location[1])/abs(head_pos[1]-location[1]))  # if the tail is not within one
+        new_y = location[0]+((head_pos[0]-location[0])/abs(head_pos[0]-location[0]))  # block of the head it moves one
+        # space in either or both directions
+    elif location[0]-head_pos[0] == 0:
+        new_x = location[1] + ((head_pos[1] - location[1]) / abs(head_pos[1] - location[1]))
+        new_y = location[0]
+    elif location[1]-head_pos[1] == 0:
+        new_x = location[1]
+        new_y = location[0] + ((head_pos[0] - location[0]) / abs(head_pos[0] - location[0]))
+    new_loc = [int(new_y), int(new_x)]
+    return new_loc
+
+
+# initialize the board
+current_loc = [sum_up, sum_right]
+tail_loc = current_loc
+ropeField[current_loc[0], current_loc[1]] = 1
+tailTrackGrid[tail_loc[0], tail_loc[1]] = 1
+
+j = 0   # loop for moving the rope
+while j < len(data):
+    k = 0
+    while k < data.at[j, 'dis']:
+        next_loc = move_head(data.at[j, 'dir'], current_loc)    # moves the head of the rope
+        new_tail_loc = move_tail(next_loc, tail_loc)    # moves the tail of the rope
+        #ropeField[next_loc[0], next_loc[1]] = j + 1
+        tailTrackGrid[new_tail_loc[0], new_tail_loc[1]] = 1  # changes the value of the space where the tail is to 1
+        current_loc = next_loc
+        tail_loc = new_tail_loc
+        k += 1
+    j += 1
+#print(ropeField)
+print(tailTrackGrid)
+print('The number spaces the tail has visited is ' + str(np.count_nonzero(tailTrackGrid == 1)))  # counts all spaces = 1
