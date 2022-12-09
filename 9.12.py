@@ -21,8 +21,9 @@ def move_head(direction, location):    # method to move the rope head
     return new_loc  # incrementing the coordinates depending on the direction
 
 
-def move_tail(head_pos, location): # method to move the rope tail
-    if abs(head_pos[0]-location[0]) + abs(head_pos[1]-location[1]) == 1 or abs(head_pos[0]-location[0]) - abs(head_pos[1]-location[1]) == 0:
+def move_tail(head_pos, location):  # method to move the rope tail
+    if abs(head_pos[0]-location[0]) + abs(head_pos[1]-location[1]) == 1 \
+            or abs(head_pos[0]-location[0]) - abs(head_pos[1]-location[1]) == 0:
         return location  # if the tail is within one block of the head then it does not need to move
     elif not location[0]-head_pos[0] == 0 and not location[1]-head_pos[1] == 0:
         new_x = location[1]+((head_pos[1]-location[1])/abs(head_pos[1]-location[1]))  # if the tail is not within one
@@ -40,20 +41,21 @@ def move_tail(head_pos, location): # method to move the rope tail
 
 def move_knot(knot_pos, location):   # method to move the knots
     if knot_pos == location:
-        return location # If the knots overlap they do not need to move
+        return location  # If the knots overlap they do not need to move
     elif abs(knot_pos[0] - location[0]) + abs(knot_pos[1] - location[1]) == 1:
         return location  # if the knot is within one block of the prev knot then it does not need to move
     elif abs(knot_pos[0] - location[0]) - abs(knot_pos[1] - location[1]) == 0 and abs(knot_pos[0] - location[0]) == 1:
         return location  # if the knot is within one block diagonally of the prev knot then it does not need to move
-    elif abs(knot_pos[0] - location[0]) - abs(knot_pos[1] - location[1]) == 0 and not abs(knot_pos[0] - location[0]) == 1:
+    elif abs(knot_pos[0] - location[0]) - abs(knot_pos[1] - location[1]) == 0 \
+            and not abs(knot_pos[0] - location[0]) == 1:
         new_x = location[1]+((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))
         new_y = location[0]+((knot_pos[0] - location[0]) / abs(knot_pos[0] - location[0]))
         new_loc = [int(new_y), int(new_x)]  # if the previous knot moved diagonally
         return new_loc
     elif not location[0] - knot_pos[0] == 0 and not location[1] - knot_pos[1] == 0:
-        new_x = location[1]+((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))  # if the tail is not within one
-        new_y = location[0]+((knot_pos[0] - location[0]) / abs(knot_pos[0] - location[0]))  # block of the head it moves one
-        # space in either or both directions
+        new_x = location[1]+((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))  # if the tail is not within
+        new_y = location[0]+((knot_pos[0] - location[0]) / abs(knot_pos[0] - location[0]))  # one block of the head it
+        # moves one space in either or both directions
     elif location[0]-knot_pos[0] == 0:
         new_x = location[1] + ((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))
         new_y = location[0]
@@ -100,6 +102,7 @@ while j < len(data):
         tail_loc = new_tail_loc
         k += 1
     j += 1
+print('Part 1:')
 print('The number spaces the tail has visited is ' + str(np.count_nonzero(tailTrackGrid == 1)))  # counts all spaces = 1
 
 # Part 2
@@ -137,4 +140,5 @@ while m < len(data):
         tail_loc = new_tail_loc
         n += 1
     m += 1
+print('Part 2:')
 print('The number spaces the tail has visited is ' + str(np.count_nonzero(tailTrackGrid == 1)))  # counts all spaces = 1
