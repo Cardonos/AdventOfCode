@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import math
 
 data = pd.read_csv('Inputs/Day 9.txt', names=['dir', 'dis'], dtype={'dir': str, 'dis': 'Int64'}, sep=' ')
 
@@ -49,7 +48,7 @@ def move_knot(knot_pos, location):   # method to move the knots
     elif abs(knot_pos[0] - location[0]) - abs(knot_pos[1] - location[1]) == 0 and not abs(knot_pos[0] - location[0]) == 1:
         new_x = location[1]+((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))
         new_y = location[0]+((knot_pos[0] - location[0]) / abs(knot_pos[0] - location[0]))
-        new_loc = [int(new_y), int(new_x)]
+        new_loc = [int(new_y), int(new_x)]  # if the previous knot moved diagonally
         return new_loc
     elif not location[0] - knot_pos[0] == 0 and not location[1] - knot_pos[1] == 0:
         new_x = location[1]+((knot_pos[1] - location[1]) / abs(knot_pos[1] - location[1]))  # if the tail is not within one
@@ -85,11 +84,9 @@ while i < len(data):
         sum_down += distance
     i += 1
 
-ropeField = np.zeros((sum_down+sum_up, sum_left+sum_right))
 tailTrackGrid = np.zeros((sum_down+sum_up, sum_left+sum_right))
 current_loc = [sum_up, sum_right]
 tail_loc = current_loc
-ropeField[current_loc[0], current_loc[1]] = 1
 tailTrackGrid[tail_loc[0], tail_loc[1]] = 1
 
 j = 0   # loop for moving the rope
@@ -98,21 +95,16 @@ while j < len(data):
     while k < data.at[j, 'dis']:
         next_loc = move_head(data.at[j, 'dir'], current_loc)    # moves the head of the rope
         new_tail_loc = move_tail(next_loc, tail_loc)    # moves the tail of the rope
-        #ropeField[next_loc[0], next_loc[1]] = j + 1
         tailTrackGrid[new_tail_loc[0], new_tail_loc[1]] = 1  # changes the value of the space where the tail is to 1
         current_loc = next_loc
         tail_loc = new_tail_loc
         k += 1
     j += 1
-#print(ropeField)
-print(tailTrackGrid)
 print('The number spaces the tail has visited is ' + str(np.count_nonzero(tailTrackGrid == 1)))  # counts all spaces = 1
 
 # Part 2
-# tails can follow tails now -> diagonal movement is possible
-
-# initializing the board
-ropeField = np.zeros((sum_down+sum_up, sum_left+sum_right))
+# tails can follow tails now -> diagonal movement is possible. Addressed in move_knot
+# initializing the board, 1 head 9 nodes
 tailTrackGrid = np.zeros((sum_down+sum_up, sum_left+sum_right))
 current_loc = [sum_up, sum_right]
 knot1 = current_loc
@@ -124,10 +116,9 @@ knot6 = current_loc
 knot7 = current_loc
 knot8 = current_loc
 tail_loc = current_loc
-ropeField[current_loc[0], current_loc[1]] = 1
 tailTrackGrid[tail_loc[0], tail_loc[1]] = 1
 
-m = 0   # loop for moving the rope
+m = 0   # loop for moving the rope and knots
 while m < len(data):
     n = 0
     while n < data.at[m, 'dis']:
@@ -146,5 +137,4 @@ while m < len(data):
         tail_loc = new_tail_loc
         n += 1
     m += 1
-print(tailTrackGrid)
 print('The number spaces the tail has visited is ' + str(np.count_nonzero(tailTrackGrid == 1)))  # counts all spaces = 1
