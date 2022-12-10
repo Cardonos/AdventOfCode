@@ -28,11 +28,11 @@ def move_tail(head_pos, location):  # method to move the rope tail
     elif not location[0]-head_pos[0] == 0 and not location[1]-head_pos[1] == 0:
         new_x = location[1]+((head_pos[1]-location[1])/abs(head_pos[1]-location[1]))  # if the tail is not within one
         new_y = location[0]+((head_pos[0]-location[0])/abs(head_pos[0]-location[0]))  # block of the head it moves one
-        # space in either or both directions
-    elif location[0]-head_pos[0] == 0:
+        # space in both directions
+    elif location[0]-head_pos[0] == 0:  # moving in x
         new_x = location[1] + ((head_pos[1] - location[1]) / abs(head_pos[1] - location[1]))
         new_y = location[0]
-    elif location[1]-head_pos[1] == 0:
+    elif location[1]-head_pos[1] == 0:  # moving in y
         new_x = location[1]
         new_y = location[0] + ((head_pos[0] - location[0]) / abs(head_pos[0] - location[0]))
     new_loc = [int(new_y), int(new_x)]
