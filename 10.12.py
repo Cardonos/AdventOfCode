@@ -30,17 +30,7 @@ while curr_index < len(data):   # iterating over all the indexes, while counting
     step = curr_cycle[1]
     x = x + curr_cycle[2]
     cycles += 1
-    if cycles == 20:
-        output += cycles * x
-    if cycles == 60:
-        output += cycles * x
-    if cycles == 100:
-        output += cycles * x
-    if cycles == 140:
-        output += cycles * x
-    if cycles == 180:
-        output += cycles * x
-    if cycles == 220:
+    if divmod(cycles, 40)[1] == 20:  # true at the given values of 20, 60, 100...
         output += cycles * x
 print('The sum of the signal strength at the given values is ' + str(output))
 
