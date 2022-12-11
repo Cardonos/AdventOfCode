@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # Same as Part 1, except worry levels are not divided by 3
 # to keep the size under control the number gets tracked as a mod of all the checks that are done multiplied
 
@@ -44,6 +45,7 @@ class Monkey:
 class Forest:
     def __init__(self):
         self.monkeys = []
+
     def inspect(self, index):
         return self.monkeys[index].inspect()
 
@@ -67,7 +69,7 @@ class Forest:
 data = open('Inputs/Day 11.txt')
 j = 0
 modulo = 1  # initializing the modulo that is all check values multiplied together
-forest = Forest()   # Parsing the data and populating the forest with Monkeys
+forest = Forest()  # Parsing the data and populating the forest with Monkeys
 for a in data:
     a = a.rstrip()
     if a.startswith('Monkey'):
@@ -76,7 +78,7 @@ for a in data:
         items = []
         i = 18
         while i < len(a):
-            items.append(int(a[i:(i+2)]))
+            items.append(int(a[i:(i + 2)]))
             i += 4
     if a.startswith('  Operation'):
         operation = [a[23], a[25::]]
@@ -108,8 +110,8 @@ while n < 10000:
     n += 1
 monkey_business = []
 p = 0
-for k in forest.monkeys:    # getting the number of inspections done by each monkey
+for k in forest.monkeys:  # getting the number of inspections done by each monkey
     monkey_business = np.append(monkey_business, forest.get_inspects(p))
     p += 1
 monkey_business = np.sort(monkey_business)
-print('The amount of monkey business that has happened is ' + str(monkey_business[-1]*monkey_business[-2]))
+print('The amount of monkey business that has happened is ' + str(monkey_business[-1] * monkey_business[-2]))
