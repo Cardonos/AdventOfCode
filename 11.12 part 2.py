@@ -76,7 +76,7 @@ for a in data:
         items = []
         i = 18
         while i < len(a):
-            items.append(a[i:(i+2)])
+            items.append(int(a[i:(i+2)]))
             i += 4
     if a.startswith('  Operation'):
         operation = [a[23], a[25::]]
