@@ -13,7 +13,7 @@ def compare(a, b):
     return len(a) - len(b)
 
 
-data = list(map(str.splitlines, open('Inputs/testdata.txt').read().strip().split("\n\n")))
+data = list(map(str.splitlines, open('Inputs/Day 13.txt').read().strip().split("\n\n")))
 
 out = 0
 for i, (left, right) in enumerate(data):
