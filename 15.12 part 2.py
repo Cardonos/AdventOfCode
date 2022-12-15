@@ -1,12 +1,9 @@
 import numpy as np
-
-
+# Part 2, RIP my PC
 
 sens_or_beac = True
 x = 0
 y = 0
-y_check = 2000000
-beacons_on_y = 0
 sensors = []
 beacons = []
 data = open('Inputs/Day 15.txt').read().split('\n')
@@ -32,8 +29,6 @@ for line in data:
                 if i.startswith('y='):
                     y = i[2:]
                 if not x == 0 and not y == 0:
-                    if y == y_check:
-                        beacons_on_y += 1
                     if len(beacons) > 0:
                         beacons = np.vstack((beacons,[int(y),int(x)]))
                     else:
@@ -41,28 +36,6 @@ for line in data:
                     x = 0
                     y = 0
                     sens_or_beac = True
-max_x = 0
-max_y = 0
-min_x = 0
-min_y = 0
-for i in sensors:
-    if i[0] > max_y:
-        max_y = i[0]
-    if i[0] < min_y:
-        min_y = i[0]
-    if i[1] > max_x:
-        max_x = i[1]
-    if i[1] < min_x:
-        min_x = i[1]
-for i in beacons:
-    if i[0] > max_y:
-        max_y = i[0]
-    if i[0] < min_y:
-        min_y = i[0]
-    if i[1] > max_x:
-        max_x = i[1]
-    if i[1] < min_x:
-        min_x = i[1]
 
 distances = []
 for i in sensors:
@@ -78,38 +51,32 @@ for i in sensors:
         distances.append(min(beacon_distance))
     else:
         distances = [min(beacon_distance)]
+x_check = 4000000
+y_check = 4000000
 
-
-coverage = 0
-o = 0
-sensors_in_range = []
-dist_in_range = []
-while o < len(sensors):
-    if sensors[o][0] + distances[o] < y_check or sensors[o][0] - distances[o] > y_check:
-        o += 1
-        continue
-    else:
-        if len(sensors_in_range) > 0:
-            sensors_in_range = np.vstack((sensors_in_range,[sensors[o][0],sensors[o][1]]))
-        else:
-            sensors_in_range = [sensors[o][0],sensors[o][1]]
-        if len(dist_in_range) > 0:
-            dist_in_range.append(distances[o])
-        else:
-            dist_in_range = [distances[o]]
-    o += 1
-
-m = min_x - max(distances) - 10
-while m < max_x + max(distances) + 10:
-    covered = False
-    n = 0
-    while n < len(sensors_in_range):
-        if abs(sensors_in_range[n][0] - y_check) + abs(sensors_in_range[n][1] - m) <= dist_in_range[n]:
-            covered = True
-        n += 1
-    if covered:
-        coverage += 1
-        covered = False
-    m += 1
-
-print(coverage - 1)
+k=0
+n_checked = 0
+while k < len(sensors):
+    for dx in range(distances[k]+2):
+        dy = (distances[k]+1)-dx
+        for signx,signy in [(-1,-1),(-1,1),(1,-1),(1,1)]:
+            n_checked += 1
+            found = True
+            x = sensors[k][1]+(dx*signx)
+            y = sensors[k][0]+(dy*signy)
+            if not(0 <= x <= x_check and 0 <= y <= y_check):
+                continue
+            assert abs(x - sensors[k][1]) + abs(y - sensors[k][0]) == distances[k] + 1
+            l = 0
+            while l < len(sensors):
+                dxy = abs(x - sensors[l][1]) + abs(y - sensors[l][0])
+                if dxy <= distances[l]:
+                    found = False
+                l += 1
+            print(n_checked)
+            if found:
+                print(x)
+                print(y)
+                print(x * 4000000 + y)
+                exit(0)
+    k += 1
