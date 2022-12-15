@@ -55,12 +55,10 @@ x_check = 4000000
 y_check = 4000000
 
 k=0
-n_checked = 0
 while k < len(sensors):
     for dx in range(distances[k]+2):
         dy = (distances[k]+1)-dx
         for signx,signy in [(-1,-1),(-1,1),(1,-1),(1,1)]:
-            n_checked += 1
             found = True
             x = sensors[k][1]+(dx*signx)
             y = sensors[k][0]+(dy*signy)
@@ -73,7 +71,6 @@ while k < len(sensors):
                 if dxy <= distances[l]:
                     found = False
                 l += 1
-            print(n_checked)
             if found:
                 print(x)
                 print(y)
